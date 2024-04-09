@@ -92,17 +92,17 @@ value varchar(30));
 \copy SessionAnimalTrait from 'SessionAnimalTrait.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
 \copy PicklistValue from 'PicklistValue.csv' WITH DELIMITER ',' CSV HEADER;
-drop table goat;
+drop table goat cascade;
 Create table goat as select Animal_id, rfid, Tag, Dob, Dam, prev_tag sire from animal;
-drop table birth_weight;
-Create table birth_weight as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357;
-drop table weight;
+drop table birth_weight cascade;
+Create table birth_weight as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357 and alpha_value<>'';
+drop table weight cascade;
 Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
-drop table dam;
+drop table dam cascade;
 create or replace view dams as select distinct(dam) from animal;
 Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
 drop table child;
-drop view dams;
+drop view dams cascade;
 Create table child as select animal_id, tag, dam from goat order by dam;
 
 drop table Season CASCADE;
