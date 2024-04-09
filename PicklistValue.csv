@@ -1,4 +1,4 @@
-picklistvalue_id,picklist_id,value
+PicklistValue_id, Picklist_id, value
 1,1,"Destron Reader"
 2,1,"EID Standard Reader"
 3,2,"9600,8,1,N,None"

@@ -1,4 +1,4 @@
-DROP  TABLE Animal;
+Drop table Animal;
 CREATE temporary TABLE Animal (
 animal_id integer primary key,
 lrid integer NOT NULL default 0,
@@ -55,16 +55,7 @@ nlis_date timestamp,
 modified timestamp,
 full_rfid varchar(16) default '',
 full_rfid_date timestamp);
-DROP TABLE Note;
-CREATE temporary  TABLE Note (
-animal_id integer NOT NULL,
-created timestamp,
-note varchar(30) NOT NULL,
-session_id integer NOT NULL,
-is_deleted integer default 0,
-is_alert integer default 0,
-primary key( animal_id, created ));
-DROP TABLE SessionAnimalActivity;
+drop table SessionAnimalActivity;
 CREATE temporary  TABLE SessionAnimalActivity (
 session_id integer NOT NULL,
 animal_id integer NOT NULL,
@@ -76,7 +67,7 @@ is_history integer NOT NULL default 0,
 is_exported integer NOT NULL default 0,
 is_deleted integer default 0,
 primary key( session_id, animal_id, activity_code, when_measured ));
-DROP TABLE SessionAnimalTrait;
+drop table SessionAnimalTrait;
 CREATE temporary  TABLE SessionAnimalTrait (
 session_id integer NOT NULL,
 animal_id integer NOT NULL,
@@ -90,33 +81,37 @@ is_history integer NOT NULL default 0,
 is_exported integer NOT NULL default 0,
 is_deleted integer default 0,
 primary key(session_id, animal_id, trait_code, when_measured));
-DROP TABLE PicklistValue;
+drop table PicklistValue;
 CREATE temporary  TABLE PicklistValue (
 picklistvalue_id integer primary key,
 picklist_id integer,
 value varchar(30));
 -- read the CSV file into the table
-\copy Animal from 'Animal.csv' WITH DELIMITER ',' CSV HEADER;
+\copy Animal from 'Animal.csv' with DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
-\copy Note from 'Note.csv' WITH DELIMITER ',' CSV HEADER;
+--\copy Note from 'Note.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
-\copy SessionAnimalActivity from 'SessionAnimalActivity.csv' WITH
-DELIMITER ',' CSV HEADER;
+\copy SessionAnimalActivity from 'SessionAnimalActivity.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
-\copy SessionAnimalTrait from 'SessionAnimalTrait.csv' WITH DELIMITER ','
-CSV HEADER;
+\copy SessionAnimalTrait from 'SessionAnimalTrait.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
-\copy PicklistValue from 'PicklistValue.csv' WITH DELIMITER ',' CSV
-HEADER;
-
+\copy PicklistValue from 'PicklistValue.csv' WITH DELIMITER ',' CSV HEADER;
+drop table goat;
 Create table goat as select Animal_id, rfid, Tag, Dob, Dam, prev_tag sire from animal;
-Create table birth_weight as select animal_id, alpha value from sessionanimaltrait where trait_code = 357;
-Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53; –used for winter and wean weights, waiting on clarification from stakeholder
-Create table dam as select animal_id, distinct(dam), as dtag, prev_tag from goat;
+drop table birth_weight;
+Create table birth_weight as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357;
+drop table weight;
+Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
+drop table dam;
+create view dams as select distinct(dam) from animal;
+Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
+drop table child;
 Create table child as select animal_id, tag, dam from goat order by dam;
 
+drop table Season;
+Create table Season (season integer primary key, seasonName varchar(6) not null);
+drop table Season_Month;
 Create table Season_Month (
 	Month integer primary key,
-	Season integer foreign key references season
-)
-Create table Season (season integer primary key, seasonName varchar(6) not null)
+	Season integer references season
+);
