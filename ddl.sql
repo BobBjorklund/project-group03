@@ -1,4 +1,3 @@
-Drop table Animal;
 CREATE temporary TABLE Animal (
 animal_id integer primary key,
 lrid integer NOT NULL default 0,
@@ -55,7 +54,6 @@ nlis_date timestamp,
 modified timestamp,
 full_rfid varchar(16) default '',
 full_rfid_date timestamp);
-drop table SessionAnimalActivity;
 CREATE temporary  TABLE SessionAnimalActivity (
 session_id integer NOT NULL,
 animal_id integer NOT NULL,
@@ -67,7 +65,6 @@ is_history integer NOT NULL default 0,
 is_exported integer NOT NULL default 0,
 is_deleted integer default 0,
 primary key( session_id, animal_id, activity_code, when_measured ));
-drop table SessionAnimalTrait;
 CREATE temporary  TABLE SessionAnimalTrait (
 session_id integer NOT NULL,
 animal_id integer NOT NULL,
@@ -81,7 +78,6 @@ is_history integer NOT NULL default 0,
 is_exported integer NOT NULL default 0,
 is_deleted integer default 0,
 primary key(session_id, animal_id, trait_code, when_measured));
-drop table PicklistValue;
 CREATE temporary  TABLE PicklistValue (
 picklistvalue_id integer primary key,
 picklist_id integer,
@@ -103,15 +99,20 @@ Create table birth_weight as select animal_id, alpha_value from sessionanimaltra
 drop table weight;
 Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
 drop table dam;
-create view dams as select distinct(dam) from animal;
+create or replace view dams as select distinct(dam) from animal;
 Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
 drop table child;
+drop view dams;
 Create table child as select animal_id, tag, dam from goat order by dam;
 
-drop table Season;
+drop table Season CASCADE;
 Create table Season (season integer primary key, seasonName varchar(6) not null);
 drop table Season_Month;
 Create table Season_Month (
 	Month integer primary key,
 	Season integer references season
 );
+drop table Animal;
+drop table PicklistValue;
+drop table SessionAnimalActivity;
+drop table SessionAnimalTrait;
