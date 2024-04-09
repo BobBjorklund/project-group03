@@ -1,0 +1,16 @@
+Insert into Season(season, seasonName) values (1,’Winter’);
+Insert into Season(season, seasonName) values (2,’Spring’);
+Insert into Season(season, seasonName) values (3,’Summer’);
+Insert into Season(season, seasonName) values (4,’Fall’);
+INSERT into Season_Month (Month, season) values (1,1);
+INSERT into Season_Month (Month, season) values (2,1);
+INSERT into Season_Month (Month, season) values (3,2);
+INSERT into Season_Month (Month, season) values (4,2);
+INSERT into Season_Month (Month, season) values (5,2);
+INSERT into Season_Month (Month, season) values (6,3);
+INSERT into Season_Month (Month, season) values (7,3);
+INSERT into Season_Month (Month, season) values (8,3);
+INSERT into Season_Month (Month, season) values (9,4);
+INSERT into Season_Month (Month, season) values (10,4);
+INSERT into Season_Month (Month, season) values (11,4);
+INSERT into Season_Month (Month, season) values (12,1);
