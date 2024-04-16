@@ -5,10 +5,39 @@
     body {
         background-color: cornflowerblue;
     }
+    table {
+        border:1px solid black;
+    }
+    tr {
+        border:1px solid black;
+    }
+    td {
+        border:1px solid black;
+    }
 </style>
+    
 {%endblock%}
 {%block content%}
+    <table>
     {% for dam in dams%}
-        {{dam}}<br>
+        <tr>
+        {%for colname in colnames %}
+        <td>{{colname}}</td>
+        {%endfor%}
+        </tr>
+        <tr>
+        {%for v in dam%}
+            <td>{{v}}</td>
+        {%endfor%}
+        </tr>
+        {%for kid in dam|dict_of_list:2|dict_key:dk%}
+        <tr>
+            {%for v in kid%}
+            <td>{{v}}</td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
     {%endfor%}
+
+    </table>
 {%endblock%}

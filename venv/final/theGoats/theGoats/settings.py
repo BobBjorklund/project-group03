@@ -69,7 +69,7 @@ TEMPLATES = [
             ],
             'libraries':{
             'dict_key': 'templatetags.dict_key',
-            
+            'dict_of_list': 'templatetags.dict_of_list',
             }
         },
     },
