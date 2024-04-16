@@ -18,7 +18,7 @@ def index(request):
     # print(dam)
     cursor.execute(q)
     dams = cursor.fetchall()
-    q = "select * from winterweights;"
+    q = "select * from winterweights order by animal_id,when_measured;"
     curr.execute(q)
     wws = curr.fetchall()
     for ww in wws:
@@ -41,6 +41,8 @@ def index(request):
     for kid in kids:
         id = kid[2]
         did = kid[4]
+        if not (kid[0] in winweights.keys()):
+            winweights[kid[0]] = ['no data']
         if did in damsnkids.keys():
             damsnkids[did].append([x for x in kid])
 

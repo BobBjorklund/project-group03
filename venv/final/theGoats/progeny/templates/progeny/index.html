@@ -17,6 +17,9 @@
     .dam {
         background-color:lightblue;
     }
+    .kid {
+        background-color:white;
+    }
 </style>
     
 {%endblock%}
@@ -37,7 +40,7 @@
         {%endfor%}
         <td>
             {%for v in dam|dict_of_list:0|dict_key:dam2%}
-                {{v.1}}:{{v.0}}<br>
+                {{v.1}}:{{v.0}} lbs<br>
             {%endfor%}
         </td>
         </tr>
@@ -50,10 +53,15 @@
             {%endfor%}
             <td>winter_weights</td></tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
-        <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid" style='display:none' >
+        <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid kid" style='display:none' onclick='iskiddam({{kid.2}})'>
             {%for v in kid%}
             <td>{{v}}</td>
             {%endfor%}
+            <td>
+            {%for v in kid|dict_of_list:0|dict_key:dam2%}
+                {{v.1}}:{{v.0}}<br>
+            {%endfor%}
+            </td>
         </tr>
         {%endfor%}
     {%endfor%}
@@ -68,6 +76,12 @@
                 listKids[i].style.display=(listKids[i].style.display=='none'?'table-row':'none');
             }
         }
-        
+        function iskiddam(kid) {
+            element = document.getElementById(kid)
+            if (typeof(element)!='undefined' && element!=null) {
+                showkids(kid);
+                document.getElementById(kid).scrollIntoView();
+            }
+        }
     </script> 
 {%endblock%}
