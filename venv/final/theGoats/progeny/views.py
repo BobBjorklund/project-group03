@@ -13,12 +13,25 @@ def index(request):
     curr.execute(q)
     dam2 = curr.fetchall()
     dam2={dam['tag']:dam for dam in dam2}
+    winweights = {}
+
+    # print(dam)
     cursor.execute(q)
     dams = cursor.fetchall()
+    q = "select * from winterweights;"
+    curr.execute(q)
+    wws = curr.fetchall()
+    for ww in wws:
+        if not (ww[0] in winweights.keys()):
+            winweights[ww[0]] = [(ww[1],ww[2])]
+        else:
+            winweights[ww[0]].append((ww[1],ww[2]))
     damsnkids = {}
     for dam in dams:
         tmp = dam[2]
         damsnkids[tmp] =[]
+        if not (dam[0] in winweights.keys()):
+            winweights[dam[0]] = ['no data']
     colnames = [desc[0] for desc in cursor.description]
     q = 'Select kidwbw.*, ww.alpha_value as wean_weight from kidwbw left join ww on kidwbw.animal_id=ww.animal_id order by dob, animal_id;'
     cursor.execute(q)
@@ -40,4 +53,4 @@ def index(request):
     #         damskids[did].append(id)
     # print(damskids)
 
-    return render(request,'progeny/index.html',{'dam2':dam2,'dams':dams,'colnames':colnames,'dk':damsnkids})
+    return render(request,'progeny/index.html',{'dam2':winweights,'dams':dams,'colnames':colnames,'dk':damsnkids})

@@ -18,17 +18,24 @@
     
 {%endblock%}
 {%block content%}
+
     <table>
     {% for dam in dams%}
         <tr>
         {%for colname in colnames %}
         <td>{{colname}}</td>
         {%endfor%}
+        <td>winter_weights</td>
         </tr>
         <tr id = {{dam.2}}>
         {%for v in dam%}
             <td>{{v}}</td>
         {%endfor%}
+        <td>
+            {%for v in dam|dict_of_list:0|dict_key:dam2%}
+                {{v.1}}:{{v.0}}<br>
+            {%endfor%}
+        </td>
         </tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
         <tr>
