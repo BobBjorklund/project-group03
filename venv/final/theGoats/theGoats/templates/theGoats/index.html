@@ -1,4 +1,6 @@
+
 {%extends 'theGoats/base.html'%}
+{%load dict_key %}
 {%block title %} Welcome to the Goats Database {%endblock%}
 {%block css %}
 <style>
@@ -28,7 +30,8 @@
     {% for name,link in links.items %}
         <div class='reportCard'>
             <a href='{% url link %}'>
-                {{name}}
+                {{name}}:<br>
+                {{ desc|dict_key:link }}
             </a>
             <br>
         </div>
