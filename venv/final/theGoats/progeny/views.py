@@ -9,7 +9,7 @@ def index(request):
     cursor = connection.cursor()
     curr = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-    q = "Select damwbw.*, ww.alpha_value as wean_weight from damwbw left join ww on damwbw.animal_id=ww.animal_id where tag <> '' order by dob limit 10;"
+    q = "Select damwbw.*, ww.alpha_value as wean_weight from damwbw left join ww on damwbw.animal_id=ww.animal_id where tag <> '' order by dob;"
     curr.execute(q)
     dam2 = curr.fetchall()
     dam2={dam['tag']:dam for dam in dam2}

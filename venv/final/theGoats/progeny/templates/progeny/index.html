@@ -20,6 +20,7 @@
 {%block content%}
 
     <table>
+        <p id = 'text'></p>
     {% for dam in dams%}
         <tr>
         {%for colname in colnames %}
@@ -27,7 +28,7 @@
         {%endfor%}
         <td>winter_weights</td>
         </tr>
-        <tr id = {{dam.2}}>
+        <tr id = {{dam.2}} onclick="showkids({{dam.2}})">
         {%for v in dam%}
             <td>{{v}}</td>
         {%endfor%}
@@ -38,13 +39,24 @@
         </td>
         </tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
-        <tr>
+        <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid" style='display:none' >
             {%for v in kid%}
             <td>{{v}}</td>
             {%endfor%}
         </tr>
         {%endfor%}
     {%endfor%}
-
+{%block scripts%}
+        
+{%endblock%}
     </table>
+    <script>
+        function showkids(dam) {
+            var listKids = document.getElementsByClassName(dam+'kid');
+            for (var i = 0; i < listKids.length;i++){
+                listKids[i].style.display=(listKids[i].style.display=='none'?'table-row':'none');
+            }
+        }
+        
+    </script> 
 {%endblock%}
