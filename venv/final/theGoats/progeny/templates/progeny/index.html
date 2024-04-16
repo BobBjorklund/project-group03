@@ -41,6 +41,14 @@
             {%endfor%}
         </td>
         </tr>
+        <tr class="{{dam.2}}kid" style='display:none'>{%for colname in colnames %}
+            {% if colname != 'num_kids' %}
+            <td>{{colname}}</td>
+            {%else %}
+            <td>num_sibs</td>
+            {%endif%}
+            {%endfor%}
+            <td>winter_weights</td></tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
         <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid" style='display:none' >
             {%for v in kid%}
