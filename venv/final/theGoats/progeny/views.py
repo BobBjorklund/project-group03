@@ -3,10 +3,16 @@ from django.http import HttpResponse
 # from django.template import render
 # Create your views here.
 import psycopg2
+from psycopg2 import extras
 def index(request):
     connection = psycopg2.connect(database="goats", user="lion", password="lion", host="localhost", port=5432)
     cursor = connection.cursor()
-    q = "Select damwbw.*, ww.alpha_value as wean_weight from damwbw left join ww on damwbw.animal_id=ww.animal_id where tag <> '' order by dob;"
+    curr = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+    q = "Select damwbw.*, ww.alpha_value as wean_weight from damwbw left join ww on damwbw.animal_id=ww.animal_id where tag <> '' order by dob limit 10;"
+    curr.execute(q)
+    dam2 = curr.fetchall()
+    dam2={dam['tag']:dam for dam in dam2}
     cursor.execute(q)
     dams = cursor.fetchall()
     damsnkids = {}
@@ -34,4 +40,4 @@ def index(request):
     #         damskids[did].append(id)
     # print(damskids)
 
-    return render(request,'progeny/index.html',{'dams':dams,'colnames':colnames,'dk':damsnkids})
+    return render(request,'progeny/index.html',{'dam2':dam2,'dams':dams,'colnames':colnames,'dk':damsnkids})
