@@ -38,6 +38,7 @@
         <td>{{colname}}</td>
         {%endfor%}
         <td>winter_weights</td>
+        <td>sale weight</td>
         </tr>
         <tr id = {{dam.2}} class='dam' onclick='showkids({{dam.2}})'>
         {%for v in dam%}
@@ -48,6 +49,7 @@
                 {{v.1}}/{{v.2}}: {{v.0}}<br>
             {%endfor%}
         </td>
+        <td>{{dam|dict_of_list:0|dict_key:sws|dict_of_list:2}}</td>
         </tr>
         <tr class="{{dam.2}}kid" style='display:none'>{%for colname in colnames %}
             {% if colname != 'num_kids' %}
@@ -56,7 +58,7 @@
             <td>num_sibs</td>
             {%endif%}
             {%endfor%}
-            <td>winter_weights</td></tr>
+            <td>winter_weights</td><td>sale weight</td></tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
         <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid kid" style='display:none' onclick='iskiddam({{kid.2}})'>
             {%for v in kid%}
@@ -67,6 +69,7 @@
                 {{v.1}}/{{v.2}}:{{v.0}}<br>
             {%endfor%}
             </td>
+            <td>{{kid|dict_of_list:0|dict_key:sws|dict_of_list:2}}</td>
         </tr>
         {%endfor%}
     {%endfor%}

@@ -112,7 +112,12 @@ Create table Season_Month (
 	Month integer primary key,
 	Season integer references season
 );
-drop table Animal;
+create table saledate as select Animal_id,status_date as saledate from animal where status ='Sold';
+create or replace view lastweight as select animal_id, max(when_measured) as salesweight from weight group by animal_id;
+create or replace view salesweights as select l.animal_id, l.salesweight from lastweight as l inner join saledate as s on l.animal_id = s.animal_id;
+create or replace view sws as select s.*, w.alpha_value from salesweights as s inner join weight as w on s.animal_id = w.animal_id and s.salesweight=w.when_measured ;
+
+--drop table Animal;
 drop table PicklistValue;
 drop table SessionAnimalActivity;
 drop table SessionAnimalTrait;

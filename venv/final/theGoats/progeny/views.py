@@ -8,6 +8,10 @@ def index(request):
     connection = psycopg2.connect(database="goats", user="lion", password="lion", host="localhost", port=5432)
     cursor = connection.cursor()
     curr = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    q = 'Select * from sws order by animal_id;'
+    curr.execute(q)
+    sws = curr.fetchall()
+    sws = {sw['animal_id']:sw for sw in sws}
 
     q = "Select damwbw.*, ww.alpha_value as wean_weight from damwbw left join ww on damwbw.animal_id=ww.animal_id where tag <> '' order by dob;"
     curr.execute(q)
@@ -32,6 +36,8 @@ def index(request):
         damsnkids[tmp] =[]
         if not (dam[0] in winweights.keys()):
             winweights[dam[0]] = [('no','data','found')]
+        if not (dam[0] in sws.keys()):
+            sws[dam[0]] = ['','','not sold']
     colnames = [desc[0] for desc in cursor.description]
     q = 'Select kidwbw.*, ww.alpha_value as wean_weight from kidwbw left join ww on kidwbw.animal_id=ww.animal_id order by dob, animal_id;'
     cursor.execute(q)
@@ -43,6 +49,8 @@ def index(request):
         did = kid[4]
         if not (kid[0] in winweights.keys()):
             winweights[kid[0]] = [('no','data','found')]
+        if not (kid[0] in sws.keys()):
+            sws[kid[0]] = ['','','not sold']
         if did in damsnkids.keys():
             damsnkids[did].append([x for x in kid])
 
@@ -55,4 +63,4 @@ def index(request):
     #         damskids[did].append(id)
     # print(damskids)
 
-    return render(request,'progeny/index.html',{'dam2':winweights,'dams':dams,'colnames':colnames,'dk':damsnkids})
+    return render(request,'progeny/index.html',{'dam2':winweights,'dams':dams,'colnames':colnames,'dk':damsnkids,'sws':sws})
