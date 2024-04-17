@@ -18,20 +18,20 @@ def index(request):
     # print(dam)
     cursor.execute(q)
     dams = cursor.fetchall()
-    q = "select * from winterweights order by animal_id,when_measured;"
+    q = "select animal_id, alpha_value, extract(month from when_measured), extract(year from when_measured) from winterweights order by animal_id,when_measured;"
     curr.execute(q)
     wws = curr.fetchall()
     for ww in wws:
         if not (ww[0] in winweights.keys()):
-            winweights[ww[0]] = [(ww[1],ww[2])]
+            winweights[ww[0]] = [(ww[1],ww[2],ww[3])]
         else:
-            winweights[ww[0]].append((ww[1],ww[2]))
+            winweights[ww[0]].append((ww[1],ww[2],ww[3]))
     damsnkids = {}
     for dam in dams:
         tmp = dam[2]
         damsnkids[tmp] =[]
         if not (dam[0] in winweights.keys()):
-            winweights[dam[0]] = ['no data']
+            winweights[dam[0]] = [('no','data','found')]
     colnames = [desc[0] for desc in cursor.description]
     q = 'Select kidwbw.*, ww.alpha_value as wean_weight from kidwbw left join ww on kidwbw.animal_id=ww.animal_id order by dob, animal_id;'
     cursor.execute(q)
@@ -42,7 +42,7 @@ def index(request):
         id = kid[2]
         did = kid[4]
         if not (kid[0] in winweights.keys()):
-            winweights[kid[0]] = ['no data']
+            winweights[kid[0]] = [('no','data','found')]
         if did in damsnkids.keys():
             damsnkids[did].append([x for x in kid])
 

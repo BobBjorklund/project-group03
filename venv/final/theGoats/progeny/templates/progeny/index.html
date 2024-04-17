@@ -2,6 +2,11 @@
 {%block title %} Welcome to the Progeny Report {%endblock%}
 {%block css %}
 <style>
+    * {
+        box-sizing:border-box;
+        padding:0px;
+        margin:0px;
+    }
     body {
         background-color: cornflowerblue;
     }
@@ -40,7 +45,7 @@
         {%endfor%}
         <td>
             {%for v in dam|dict_of_list:0|dict_key:dam2%}
-                {{v.1}}:{{v.0}} lbs<br>
+                {{v.1}}/{{v.2}}: {{v.0}}<br>
             {%endfor%}
         </td>
         </tr>
@@ -59,7 +64,7 @@
             {%endfor%}
             <td>
             {%for v in kid|dict_of_list:0|dict_key:dam2%}
-                {{v.1}}:{{v.0}}<br>
+                {{v.1}}/{{v.2}}:{{v.0}}<br>
             {%endfor%}
             </td>
         </tr>
@@ -72,6 +77,7 @@
     <script>
         function showkids(dam) {
             var listKids = document.getElementsByClassName(dam+'kid');
+            document.getElementById(dam).scrollIntoView({behavior:'smooth'});
             for (var i = 0; i < listKids.length;i++){
                 listKids[i].style.display=(listKids[i].style.display=='none'?'table-row':'none');
             }
@@ -80,7 +86,6 @@
             element = document.getElementById(kid)
             if (typeof(element)!='undefined' && element!=null) {
                 showkids(kid);
-                document.getElementById(kid).scrollIntoView();
             }
         }
     </script> 
