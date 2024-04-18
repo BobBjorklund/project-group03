@@ -8,4 +8,13 @@
 </style>
 {%endblock%}
 {%block content%}
+<table>
+{% for season in s %}
+<tr>
+    {%for attr in season%}
+        <td>{{attr}}</td>
+    {%endfor%}
+</tr>
+{% endfor %}
+</table>
 {%endblock%}
