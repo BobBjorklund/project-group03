@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 # Create your views here.
 def index(request):
-    blah = 'blah'
-    return render(request,'seasons/index.html',{'blah':blah})
+    context={
+        
+    }
+    return render(request,'seasons/index.html',context)
 # Create your views here.

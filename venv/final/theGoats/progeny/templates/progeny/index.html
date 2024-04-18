@@ -29,7 +29,6 @@
     
 {%endblock%}
 {%block content%}
-
     <table>
         <p id = 'text'></p>
     {% for dam in dams%}
@@ -57,7 +56,7 @@
             {%else %}
             <td>num_sibs</td>
             {%endif%}
-            {%endfor%}
+            {%endfor%} 
             <td>winter_weights</td><td>sale weight</td></tr>
         {%for kid in dam|dict_of_list:2|dict_key:dk%}
         <tr id="{{dam.2}}{{kid.2}}" class="{{dam.2}}kid kid" style='display:none' onclick='iskiddam({{kid.2}})'>
