@@ -5,6 +5,9 @@
     body {
         background-color: cornflowerblue;
     }
+	table, tr, td {
+	border:1px solid black
+	}
 </style>
 {%endblock%}
 {%block content%}
@@ -12,6 +15,7 @@
 {% for season in s %}
 <tr>
     {%for attr in season%}
+
         <td>{{attr}}</td>
     {%endfor%}
 </tr>

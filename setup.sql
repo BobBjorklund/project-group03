@@ -3,5 +3,6 @@
 \i views.sql
 \i ww.sql
 \i wintweight.sql
+\i datetoint.sql
 \q
 

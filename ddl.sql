@@ -98,6 +98,7 @@ drop table birth_weight cascade;
 Create table birth_weight as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357 and alpha_value<>'';
 drop table weight cascade;
 Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
+update weight set alpha_value = '0' where alpha_value = '';
 drop table dam cascade;
 create or replace view dams as select distinct(dam) from animal;
 Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
