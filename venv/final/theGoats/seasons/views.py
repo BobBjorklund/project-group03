@@ -8,7 +8,11 @@ def index(request):
     curr = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
     q = 'create or replace view maxweight as select animal_id, when_measured, max(alpha_value) as max_weight from weight group by animal_id, when_measured order by animal_id;'
     curr.execute(q)
-    q = "Create or replace view adg as SELECT mw.animal_id, ((cast(mw.max_weight as double precision) - cast(coalesce(g.birth_weight, '0') as double precision)) / (datetoint(mw.when_measured)- datetoint(g.dob))) AS adg, g.dob FROM maxweight as mw inner join damwbw as g on g.animal_id = mw.animal_id;"
+    q = "Create or replace view adgd as SELECT mw.animal_id, ((cast(mw.max_weight as double precision) - cast(coalesce(g.birth_weight, '0') as double precision)) / (datetoint(mw.when_measured)- datetoint(g.dob))) AS adg, g.dob FROM maxweight as mw inner join damwbw as g on g.animal_id = mw.animal_id;"
+    curr.execute(q)
+    q = "Create or replace view adgk as SELECT mw.animal_id, ((cast(mw.max_weight as double precision) - cast(coalesce(g.birth_weight, '0') as double precision)) / (datetoint(mw.when_measured)- datetoint(g.dob))) AS adg, g.dob FROM maxweight as mw inner join kidwbw as g on g.animal_id = mw.animal_id;"
+    curr.execute(q)
+    q = 'Create or replace view adg as select * from adgd UNION select * from adgk;'
     curr.execute(q)
     q = 'Create or replace view adgbyseason as select a.animal_id, a.adg, sm.season from adg as a inner join season_month as sm on extract(month from a.dob) = sm.month;'
     curr.execute(q)
