@@ -29,6 +29,9 @@
         text-align: center;
         font-size: 60px;
     }
+    .kidHeader {
+        background-color: #8af9ff;
+    }
 </style>
     
 {%endblock%}
@@ -54,9 +57,9 @@
         </td>
         <td>{{dam|dict_of_list:0|dict_key:sws|dict_of_list:2}}</td>
         </tr>
-        <tr class="{{dam.2}}kid" style='display:none'>{%for colname in colnames %}
+        <tr class="{{dam.2}}kid kidHeader" style='display:none'>{%for colname in colnames %}
             {% if colname != 'num_kids' %}
-            <td>{{colname}}</td>
+            <td >{{colname}}</td>
             {%else %}
             <td>num_sibs</td>
             {%endif%}
