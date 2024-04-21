@@ -33,7 +33,9 @@
     <h1>Welcome to our Database</h1><br>
     <div id='container'>
     {% for name,link in links.items %}
+        
         <div class='reportCard'>
+            
             <a href='{% url link %}'>
                 {{name}}:<br>
                 {{ link|dict_key:desc }}
