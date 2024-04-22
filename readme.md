@@ -8,7 +8,7 @@ sh install.sh
 
 This will install the database, populate it with the data, build the project, start the server, and open a firefox window with the landing page, which looks like this:
 
-![A blue screen with black text Description automatically generated](media/6d2122e57cde351fa52769e36e41e3f3.png)
+![](imgs/1.png)
 
 You can then click on either link to see the report in question.
 
