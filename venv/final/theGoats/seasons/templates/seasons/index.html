@@ -7,8 +7,10 @@
         background-color: cornflowerblue;
         padding:0;
         margin:0;
+        font-family: Arial, sans-serif;
     }
-	table, tr, td {
+	table, th, td {
+        border: 1px solid black;
 		text-align: center;
         
 	}
@@ -19,12 +21,18 @@
 	.month {
 		background-color: white;
 	}
+    caption {
+        font-size: 1.5em;
+        padding: 10px;
+    }
 	.season {
 		background-color: lightblue;
+        {% comment %} background-color:  #8af9ff; {% endcomment %}
 	}
     h1 {
         text-align: center;
     }
+    
 </style>
 {%endblock%}
 {%block scripts%}
