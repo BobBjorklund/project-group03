@@ -44,15 +44,14 @@
     }
 {%endblock%}
 {%block content%}
-
+<h1>Seasonal Birth Cohort Report</h1>
 <table>
-    <h1>Seasonal Birth Cohort Report</h1>
-    <tr>
-        <td>Season:</td>
-        <td>Month:</td>
-        <td>Average adg:</td>
-        <td># Births</td>
-    </tr>
+        <tr>
+            <th>Season:</th>
+            <th>Month:</th>
+            <th>Average adg:</th>
+            <th># Births</th>
+        </tr> 
 {% for season in s %}
 <tr class = 'season' onclick='showMonths("{{season.0}}")'>
     {%for attr in season%}
