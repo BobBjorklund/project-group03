@@ -6,6 +6,11 @@ from psycopg2 import extras
 def index(request):
     connection = psycopg2.connect(database="goats", user="lion", password="lion", host="localhost", port=5432)
     curr = connection.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    q = 'select month::integer as month, count from bbm;'
+    curr.execute(q)
+    bbm = curr.fetchall()
+    # bbm = [b for b in bbm]
+    bbm = {b[0]:b[1] for b in bbm}
     q = 'create or replace view maxweight as select animal_id, when_measured, max(alpha_value) as max_weight from weight group by animal_id, when_measured order by animal_id;'
     curr.execute(q)
     q = "Create or replace view adgd as SELECT mw.animal_id, ((cast(mw.max_weight as double precision) - cast(coalesce(g.birth_weight, '0') as double precision)) / (datetoint(mw.when_measured)- datetoint(g.dob))) AS adg, g.dob FROM maxweight as mw inner join damwbw as g on g.animal_id = mw.animal_id;"
@@ -38,7 +43,15 @@ def index(request):
     for season in s:
         season.append(season[1])
         season[1] = [int(month[1]) for month in m if month[0] == season[0]]
-    context={'s':s,'m':m }
+        total = 0
+        for month in season[1]:
+            total += int(bbm[month])
+        season.append(total)
+        total = 0
+    for month in m:
+        month.append(bbm[month[1]])   
+
+    context={'s':s,'m':m,'bbm':bbm }
     return render(request,'seasons/index.html',context)
 # Create your views here.
 

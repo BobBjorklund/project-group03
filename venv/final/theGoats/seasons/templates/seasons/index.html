@@ -6,7 +6,14 @@
         background-color: cornflowerblue;
     }
 	table, tr, td {
-	border:3px solid black
+		text-align: center;
+	}
+	.month {
+		background-color: white;
+	}
+
+	.season {
+		background-color: lightblue;
 	}
 </style>
 {%endblock%}
@@ -19,22 +26,23 @@
     }
 {%endblock%}
 {%block content%}
-
+{{bbm}}
 <table>
     <tr>
         <td>Season:</td>
         <td>Month:</td>
         <td>Average adg:</td>
+        <td># Births</td>
     </tr>
 {% for season in s %}
-<tr onclick='showMonths("{{season.0}}")'>
+<tr class = 'season' onclick='showMonths("{{season.0}}")'>
     {%for attr in season%}
         <td>{{attr}}</td>
     {%endfor%}
 </tr>
     {%for month in m%}
         {%if month.0 == season.0%}
-        <tr class = '{{month.0}}' style='display:none'>
+        <tr class = '{{month.0}} month' style='display:none'>
             {%for attr in month%}
                 
                     <td> {{attr}} </td>

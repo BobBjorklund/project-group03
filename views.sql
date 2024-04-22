@@ -14,6 +14,7 @@ Create or replace view damwnk as select dams.*, nk.num_kids from dams inner join
 Create or replace view kidwns as select kids.*, nk.num_kids as num_sibs from kids join nk on kids.dam = nk.dam;
 Create or replace view damwbw as select d.*, b.alpha_value as birth_weight from damwnk as d join birth_weight as b on d.animal_id = b.animal_id order by d.dob;
 Create or replace view kidwbw as select k.*, b.alpha_value as birth_weight from kidwns as k join birth_weight as b on k.animal_id = b.animal_id order by k.dob;
+create view bbm as select extract(month from dob) as month ,count(*) from goat group by month order by month;
 --Create or replace view damwweanw as select d.*, w.WValue from damwbw as d join weanws as w on d.animal_id = w.animal_id;
 --Create or replace view kidwweanw as select k.*, w.WValue from kidwbw as k join weanws as w on b.animal_id = w.animal_id;
 
