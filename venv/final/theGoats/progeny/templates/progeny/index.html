@@ -21,6 +21,7 @@
     }
     .dam {
         background-color:lightblue;
+        scroll-margin-top:32px;
     }
     .kid {
         background-color:white;
@@ -87,6 +88,7 @@
         function showkids(dam) {
             var listKids = document.getElementsByClassName(dam+'kid');
             document.getElementById(dam).scrollIntoView({behavior:'smooth'});
+            
             for (var i = 0; i < listKids.length;i++){
                 listKids[i].style.display=(listKids[i].style.display=='none'?'table-row':'none');
             }
