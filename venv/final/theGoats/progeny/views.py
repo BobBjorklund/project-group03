@@ -35,7 +35,7 @@ def index(request):
         tmp = dam[2]
         damsnkids[tmp] =[]
         if not (dam[0] in winweights.keys()):
-            winweights[dam[0]] = [('no','data','found')]
+            winweights[dam[0]] = [('not found','n','a')]
         if not (dam[0] in sws.keys()):
             sws[dam[0]] = ['','','not sold']
     colnames = [desc[0] for desc in cursor.description]
@@ -48,7 +48,7 @@ def index(request):
         id = kid[2]
         did = kid[4]
         if not (kid[0] in winweights.keys()):
-            winweights[kid[0]] = [('no','data','found')]
+            winweights[kid[0]] = [('not found','n','a')]
         if not (kid[0] in sws.keys()):
             sws[kid[0]] = ['','','not sold']
         if did in damsnkids.keys():

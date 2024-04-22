@@ -10,15 +10,39 @@
 	}
 </style>
 {%endblock%}
+{%block scripts%}
+    function showMonths(season) {
+        var list = document.getElementsByClassName(season)
+        for (var i = 0; i < list.length; i++) {
+            list[i].style.display = (list[i].style.display=='table-row'?'None':'table-row')
+        }
+    }
+{%endblock%}
 {%block content%}
-<table>
-{% for season in s %}
-<tr>
-    {%for attr in season%}
 
+<table>
+    <tr>
+        <td>Season:</td>
+        <td>Month:</td>
+        <td>Average adg:</td>
+    </tr>
+{% for season in s %}
+<tr onclick='showMonths("{{season.0}}")'>
+    {%for attr in season%}
         <td>{{attr}}</td>
     {%endfor%}
 </tr>
+    {%for month in m%}
+        {%if month.0 == season.0%}
+        <tr class = '{{month.0}}' style='display:none'>
+            {%for attr in month%}
+                
+                    <td> {{attr}} </td>
+                
+            {%endfor%}
+        </tr>
+        {%endif%}
+    {%endfor%}
 {% endfor %}
 </table>
 {%endblock%}

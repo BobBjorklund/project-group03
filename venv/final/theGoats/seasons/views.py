@@ -14,6 +14,17 @@ def index(request):
     curr.execute(q)
     q = 'Create or replace view adg as select * from adgd UNION select * from adgk;'
     curr.execute(q)
+    q = 'create or replace view adgbymonth as select extract(month from dob) as month, avg(adg) as adg from adg group by month;'
+    curr.execute(q)
+    q = 'create or replace view adgbymonthse as select s.season, a.month, a.adg from adgbymonth as a inner join season_month as s on a.month = s.month;'
+    curr.execute(q)
+    q = 'create or replace view adgsnm as select s.seasonname, a.month, a.adg from adgbymonthse as a inner join season as s on a.season = s.season;'
+    curr.execute(q)
+    q = "select * from adgsnm;"
+    # // group by month
+    curr.execute(q)
+    m = curr.fetchall()
+    m = [month for month in m]
     q = 'Create or replace view adgbyseason as select a.animal_id, a.adg, sm.season from adg as a inner join season_month as sm on extract(month from a.dob) = sm.month;'
     curr.execute(q)
     q = 'create or replace view withsn as select a.animal_id, a.adg, s.seasonname from adgbyseason as a natural join season as s;'
@@ -22,11 +33,12 @@ def index(request):
     curr.execute(q)
     q = 'Select s.seasonname, a.averageADG from season as s natural join almost as a;'
     curr.execute(q)
-    
-
     s = curr.fetchall()
     s = [season for season in s]
-    context={'s':s }
+    for season in s:
+        season.append(season[1])
+        season[1] = [int(month[1]) for month in m if month[0] == season[0]]
+    context={'s':s,'m':m }
     return render(request,'seasons/index.html',context)
 # Create your views here.
 
