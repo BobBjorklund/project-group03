@@ -3,9 +3,9 @@
 --Create or replace view winws as select * from winter_weight natural join weight order by weight.animal_id;
 --Create or replace view weanws as select * from wean_weight  natural join weight order by weight.animal_id;
 --Create or replace view sws as select * from sale_weight natural join weight order by weight.animal_id;
-drop view damtags cascade;
+-- drop view damtags cascade;
 
-
+drop view dams;
 Create or replace view damtags as select distinct dam as tag from goat;
 Create or replace view dams as select a.* from goat as a natural join damtags as d; 
 Create or replace view kids as select a.* from goat as a inner join dams as d on a.dam = d.tag order by a.dam;

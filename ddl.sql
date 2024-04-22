@@ -85,31 +85,29 @@ value varchar(30));
 -- read the CSV file into the table
 \copy Animal from 'Animal.csv' with DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
---\copy Note from 'Note.csv' WITH DELIMITER ',' CSV HEADER;
--- read the CSV file into the table
 \copy SessionAnimalActivity from 'SessionAnimalActivity.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
 \copy SessionAnimalTrait from 'SessionAnimalTrait.csv' WITH DELIMITER ',' CSV HEADER;
 -- read the CSV file into the table
 \copy PicklistValue from 'PicklistValue.csv' WITH DELIMITER ',' CSV HEADER;
-drop table goat cascade;
+-- drop table goat cascade;
 Create table goat as select Animal_id, rfid, Tag, Dob, Dam, prev_tag sire from animal;
-drop table birth_weight cascade;
+-- drop table birth_weight cascade;
 Create table birth_weight2 as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357 and alpha_value<>'';
 create table birth_weight as select animal_id, min(alpha_value) as alpha_value from birth_weight2 group by animal_id;
-drop table weight cascade;
+-- drop table weight cascade;
 Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
 update weight set alpha_value = '0' where alpha_value = '';
-drop table dam cascade;
+-- drop table dam cascade;
 create or replace view dams as select distinct(dam) from animal;
 Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
-drop table child;
-drop view dams cascade;
+-- drop table child;
+-- drop view dams cascade;
 Create table child as select animal_id, tag, dam from goat order by dam;
 
-drop table Season CASCADE;
+-- drop table Season CASCADE;
 Create table Season (season integer primary key, seasonName varchar(6) not null);
-drop table Season_Month;
+-- drop table Season_Month;
 Create table Season_Month (
 	Month integer primary key,
 	Season integer references season
