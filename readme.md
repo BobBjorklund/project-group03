@@ -1,3 +1,5 @@
+Create a user named "lion" in postgres, with password "lion" and createdb privileges.
+
 Clone the repository
 
 Open the root directory of the repository in the CLI
