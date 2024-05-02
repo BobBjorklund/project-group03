@@ -102,38 +102,29 @@ COPY 340367
 COPY 1019
 -- drop table goat cascade;
 Create table goat as select Animal_id, rfid, Tag, Dob, Dam, prev_tag sire from animal;
-SELECT 8382
 -- drop table birth_weight cascade;
 Create table birth_weight2 as select animal_id, alpha_value from sessionanimaltrait where trait_code = 357 and alpha_value<>'';
-SELECT 8188
 create table birth_weight as select animal_id, min(alpha_value) as alpha_value from birth_weight2 group by animal_id;
-SELECT 8082
 -- drop table weight cascade;
 Create table weight as select animal_id, alpha_value, when_measured from sessionanimaltrait where trait_code = 53;
-SELECT 60158
 update weight set alpha_value = '0' where alpha_value = '';
-UPDATE 747
+UPDATE 0
 -- drop table dam cascade;
 create or replace view dams as select distinct(dam) from animal;
 CREATE VIEW
 Create table dam as select goat.* from goat join dams on dams.dam = goat.tag;
-SELECT 1390
 -- drop table child;
 -- drop view dams cascade;
 Create table child as select animal_id, tag, dam from goat order by dam;
-SELECT 8382
 
 -- drop table Season CASCADE;
 Create table Season (season integer primary key, seasonName varchar(6) not null);
-CREATE TABLE
 -- drop table Season_Month;
 Create table Season_Month (
 	Month integer primary key,
 	Season integer references season
 );
-CREATE TABLE
 create table saledate as select Animal_id,status_date as saledate from animal where status ='Sold';
-SELECT 4572
 create or replace view lastweight as select animal_id, max(when_measured) as salesweight from weight group by animal_id;
 CREATE VIEW
 create or replace view salesweights as select l.animal_id, l.salesweight from lastweight as l inner join saledate as s on l.animal_id = s.animal_id;
@@ -151,37 +142,21 @@ DROP TABLE
 -- populate the 'season' and 'season_month' date
 \i dmlDBPopulate.sql
 Insert into Season (season, seasonname) values(1,'Winter');
-INSERT 0 1
 Insert into Season (season, seasonName) values(2,'Spring');
-INSERT 0 1
 Insert into Season (season, seasonName) values(3,'Summer');
-INSERT 0 1
 Insert into Season (season, seasonName) values(4,'Fall');
-INSERT 0 1
 INSERT into Season_Month (month, season) values(1,1);
-INSERT 0 1
 INSERT into Season_Month (month, season) values(2,2);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(3,2);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(4,2);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(5,3);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(6,3);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(7,3);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(8,4);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(9,4);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(10,4);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(11,1);
-INSERT 0 1
 INSERT into Season_Month (Month, season) values(12,1);
-INSERT 0 1
 -- create views for goats 
 \i views.sql
 -- all commented lines have to do with wean weight, sale weight, or winter weights.
@@ -210,7 +185,6 @@ CREATE VIEW
 Create or replace view kidwbw as select k.*, b.alpha_value as birth_weight from kidwns as k join birth_weight as b on k.animal_id = b.animal_id order by k.dob;
 CREATE VIEW
 create view bbm as select extract(month from dob) as month ,count(*) from goat group by month order by month;
-CREATE VIEW
 --Create or replace view damwweanw as select d.*, w.WValue from damwbw as d join weanws as w on d.animal_id = w.animal_id;
 --Create or replace view kidwweanw as select k.*, w.WValue from kidwbw as k join weanws as w on b.animal_id = w.animal_id;
 
