@@ -8,7 +8,7 @@ Enter the following command:
 
 sh install.sh (Linux) or install.bat (Windows)
 
-This will install the database, populate it with the data, build the project, start the server, and open a firefox window with the landing page, which looks like this:
+This will install the database, populate it with the data, build the project, start the server, and open a firefox window (linux, for windows navigate to 127.0.0.1:8000 in your browser for access) with the landing page, which looks like this:
 
 ![](imgs/1.png)
 
