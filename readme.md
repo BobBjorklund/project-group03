@@ -6,7 +6,7 @@ Open the root directory of the repository in the CLI
 
 Enter the following command:
 
-sh install.sh
+sh install.sh (Linux) or install.bat (Windows)
 
 This will install the database, populate it with the data, build the project, start the server, and open a firefox window with the landing page, which looks like this:
 
